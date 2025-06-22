@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+
+<body>
+    <main class="main">
+        <header class="header">
+            <a href="#" id="home-link" class="logo">Quiz<span class="point">!</span></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+            <nav class="navbar">
+                <a href="#" id="home-link">Startseite</a>
+                <a href="#" id="select-start">Quiz</a>
+                <a href="#" id="contact-link">Kontakt</a>
+            </nav>
+        </header>
+
+        <div class="container">
+            <section class="quiz-section">
+                <div class="quiz-box">
+                    <img class="qm" src="./images/Questionmark.png" alt="">
+                    <div class="quiz-header">
+                        <span class="header-score">Punkte: 0 / 5</span>
+                    </div>
+
+                    <h2 class="question-text"></h2>
+
+                    <div class="option-list"></div>
+
+                    <div class="quiz-footer">
+                        <span class="question-total">1 von 5 Fragen</span>
+                        <button class="next-btn">Weiter</button>
+                    </div>
+                </div>
+
+                <div class="result-box">
+                    <h2>Quiz Ergebnis!</h2>
+                    <div class="percentage-container">
+                        <div class="circular-progress">
+                            <span class="progress-value">0%</span>
+                        </div>
+                        <span class="score-text">Dein Ergebnis: 0 von 5</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="tryAgain-btn">Erneut versuchen</button>
+                        <button class="goHome-btn">Zur Startseite</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home">
+                <div class="home-content">
+                    <div class="title-with-icon">
+                        <img class="megaphone" src="./images/megaphone.png" alt="">
+                        <h1>QUIZ <span class="NOW">JETZT.</span></h1>
+                        <img class="light_bulb" src="./images/light_bulb.png" alt="">
+                    </div>
+                    <p>Teste dein Wissen in unserem spannenden Quiz! Beantworte Fragen aus verschiedenen Kategorien und finde heraus, wie viele Punkte du erreichen kannst. Viel Spaß!</p>
+                    <button class="select-quiz" id="select-quiz">Quiz auswählen</button>
+
+                    <section class="info-block" id="allgemeinwissen">
+                        <img class="img_quiz" src="./images/allgemeinwissen.png" alt="">
+                        <div class="info-text">
+                            <h2>Allgemeinwissen</h2>
+                            <p class="beschreibung">Teste dein Wissen in unserem spannenden Allgemeinwissen-Quiz! Beantworte Fragen aus verschiedenen Kategorien wie Geschichte, Geografie, Wissenschaft und Kultur.</p>
+                            <button class="start-btn" data-category="allgemeinwissen">Quiz starten</button>
+                        </div>
+                    </section>
+
+                    <section class="info-block">
+                        <div class="info-text">
+                            <h2>Geografie</h2>
+                            <p class="beschreibung">Wie gut kennst du dich auf der Weltkarte aus? Finde es heraus in unserem Geografie-Quiz – mit Fragen zu Ländern, Hauptstädten, Flüssen und mehr!</p>
+                            <button class="start-btn" data-category="geografie">Quiz starten</button>
+                        </div>
+                        <img class="img_quiz" src="./images/geografie.png" alt="">
+                    </section>
+
+                    <section class="info-block">
+                        <img class="img_quiz" src="./images/geschichte.png" alt="">
+                        <div class="info-text">
+                            <h2>Geschichte</h2>
+                            <p class="beschreibung">Teste dein Wissen in unserem spannenden Geschichts-Quiz! Beweise, wie gut du dich mit wichtigen Ereignissen, Epochen und Persönlichkeiten auskennst.</p>
+                            <button class="start-btn" data-category="geschichte">Quiz starten</button>
+                        </div>
+                    </section>
+
+                    <footer class="footer" id="footer">
+                        <div class="footer-content">
+                            <a href="#" class="logo2">Quiz<span class="point">!</span></a>
+                            <div class="footer-links">
+                                <a href="#">Impressum</a>
+                                <a href="#">Datenschutz</a>
+                                <a href="#">Kontakt</a>
+                            </div>
+                            <div class="footer-social">
+                                <a href="#"><i class='bx bxl-instagram'></i></a>
+                                <a href="#"><i class='bx bxl-twitter'></i></a>
+                                <a href="#"><i class='bx bxl-gmail'></i></a>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="popup-info" style="display: none;">
+        <h2 class="popup-title"></h2>
+        <span class="info popup-text"></span>
+        <div class="btn-group">
+            <button class="info-btn exit-btn">Quiz beenden</button>
+            <a href="#" class="info-btn continue-btn">Fortsetzen</a>
+        </div>
+    </div>
+    <script>
+window.allgemeinwissenQuestions = [
+    {
+        numb: 1,
+        question: "Wie nennst du ein männliches Schwein?",
+        answer: "B. Eber",
+        options: [
+            "A. Bulle",
+            "B. Eber",
+            "C. Keiler",
+            "D. Hengst"
+        ]
+    },
+    {
+        numb: 2,
+        question: "Wie heißen die besten Freunde von „Harry Potter“?",
+        answer: "C. Ron und Hermine",
+        options: [
+            "A. Neville und Luna",
+            "B. Draco und Crabbe",
+            "C. Ron und Hermine",
+            "D. Fred und George"
+        ]
+    },
+    {
+        numb: 3,
+        question: "Wofür stehen die olympischen Ringe?",
+        answer: "A. Für die fünf Kontinente",
+        options: [
+            "A. Für die fünf Kontinente",
+            "B. Für fünf Sportarten",
+            "C. Für fünf Weltrekorde",
+            "D. Für fünf Olympiadeorte"
+        ]
+    },
+    {
+        numb: 4,
+        question: "Wer war der erste Präsident der Vereinigten Staaten von Amerika?",
+        answer: "D. George Washington",
+        options: [
+            "A. Abraham Lincoln",
+            "B. John Adams",
+            "C. Thomas Jefferson",
+            "D. George Washington"
+        ]
+    },
+    {
+        numb: 5,
+        question: "Wie viele Tage hat ein Schaltjahr?",
+        answer: "C. 366",
+        options: [
+            "A. 364",
+            "B. 365",
+            "C. 366",
+            "D. 367"
+        ]
+    }
+];
+
+window.geografieQuestions = [
+    {
+        numb: 1,
+        question: "Welcher Fluss ist der längste der Welt?",
+        answer: "A. Nil",
+        options: [
+            "A. Nil",
+            "B. Amazonas",
+            "C. Yangtse",
+            "D. Mississippi"
+        ]
+    },
+    {
+        numb: 2,
+        question: "Wie heißt die Hauptstadt von Australien?",
+        answer: "C. Canberra",
+        options: [
+            "A. Sydney",
+            "B. Melbourne",
+            "C. Canberra",
+            "D. Perth"
+        ]
+    },
+    {
+        numb: 3,
+        question: "In welchem Land liegen die Alpen nicht?",
+        answer: "D. Polen",
+        options: [
+            "A. Schweiz",
+            "B. Österreich",
+            "C. Italien",
+            "D. Polen"
+        ]
+    },
+    {
+        numb: 4,
+        question: "Welcher Ozean liegt zwischen Afrika und Australien?",
+        answer: "B. Indischer Ozean",
+        options: [
+            "A. Atlantischer Ozean",
+            "B. Indischer Ozean",
+            "C. Pazifischer Ozean",
+            "D. Südlicher Ozean"
+        ]
+    },
+    {
+        numb: 5,
+        question: "Welcher Kontinent ist der größte?",
+        answer: "C. Asien",
+        options: [
+            "A. Afrika",
+            "B. Nordamerika",
+            "C. Asien",
+            "D. Europa"
+        ]
+    }
+];
+
+
+
+
+window.geschichteQuestions = [
+    {
+        numb: 1,
+        question: "Wann begann der Zweite Weltkrieg?",
+        answer: "A. 1939",
+        options: [
+            "A. 1939",
+            "B. 1941",
+            "C. 1933",
+            "D. 1945"
+        ]
+    },
+    {
+        numb: 2,
+        question: "Wer war der erste Bundeskanzler der Bundesrepublik Deutschland?",
+        answer: "C. Konrad Adenauer",
+        options: [
+            "A. Willy Brandt",
+            "B. Helmut Kohl",
+            "C. Konrad Adenauer",
+            "D. Ludwig Erhard"
+        ]
+    },
+    {
+        numb: 3,
+        question: "Welche Mauer fiel 1989?",
+        answer: "D. Berliner Mauer",
+        options: [
+            "A. Chinesische Mauer",
+            "B. Westmauer",
+            "C. Mauer von Rom",
+            "D. Berliner Mauer"
+        ]
+    },
+    {
+        numb: 4,
+        question: "Wie hieß das Reich von Karl dem Großen?",
+        answer: "B. Frankenreich",
+        options: [
+            "A. Römisches Reich",
+            "B. Frankenreich",
+            "C. Byzantinisches Reich",
+            "D. Heiliges Land"
+        ]
+    },
+    {
+        numb: 5,
+        question: "Welcher Krieg dauerte von 1914 bis 1918?",
+        answer: "C. Erster Weltkrieg",
+        options: [
+            "A. Zweiter Weltkrieg",
+            "B. Deutsch-Französischer Krieg",
+            "C. Erster Weltkrieg",
+            "D. Dreißigjähriger Krieg"
+        ]
+    }
+];
+
+        // === DOM-Elemente ===
+const startBtn = document.querySelectorAll('.start-btn');
+const popupInfo = document.querySelector('.popup-info');
+const exitBtn = document.querySelector('.exit-btn');
+const continueBtn = document.querySelector('.continue-btn');
+const quizSection = document.querySelector('.quiz-section');
+const quizBox = document.querySelector('.quiz-box');
+const resultBox = document.querySelector('.result-box');
+const tryAgainBtn = document.querySelector('.tryAgain-btn');
+const goHomeBtn = document.querySelector('.goHome-btn');
+const main = document.querySelector('.main');
+const nextBtn = document.querySelector('.next-btn');
+const optionList = document.querySelector('.option-list');
+
+// === Quiz-Status ===
+let questionCount = 0;
+let questionNumb = 1;
+let userScore = 0;
+
+// === Event: Quiz starten ===
+startBtn.forEach(btn => {
+    btn.onclick = () => {
+        popupInfo.classList.add('active');
+        main.classList.add('active');
+        document.body.style.overflow = "hidden"; // Scrollen deaktivieren
+    };
+});
+
+// === Event: Quiz verlassen ===
+exitBtn.onclick = () => {
+    popupInfo.classList.remove('active');
+    main.classList.remove('active');
+    document.body.style.overflow = "auto"; // Scrollen wieder aktivieren
+};
+
+// === Event: Quiz fortsetzen ===
+continueBtn.onclick = () => {
+    quizSection.classList.add('active');
+    popupInfo.classList.remove('active');
+    main.classList.remove('active');
+    quizBox.classList.add('active');
+
+    showQuestions(0);
+    questionCounter(1);
+    headerScore();
+};
+
+// === Event: Quiz wiederholen ===
+tryAgainBtn.onclick = () => {
+    quizBox.classList.add('active');
+    nextBtn.classList.remove('active');
+    resultBox.classList.remove('active');
+
+    questionCount = 0;
+    questionNumb = 1;
+    userScore = 0;
+
+    showQuestions(questionCount);
+    questionCounter(questionNumb);
+    headerScore();
+};
+
+// === Event: Zurück zur Startseite ===
+goHomeBtn.onclick = () => {
+    quizSection.classList.remove('active');
+    nextBtn.classList.remove('active');
+    resultBox.classList.remove('active');
+
+    questionCount = 0;
+    questionNumb = 1;
+    userScore = 0;
+
+    showQuestions(questionCount);
+    questionCounter(questionNumb);
+    document.body.style.overflow = "auto"; // Scrollen wieder aktivieren
+};
+
+// === Event: Nächste Frage ===
+nextBtn.onclick = () => {
+    if (questionCount < questions.length - 1) {
+        questionCount++;
+        questionNumb++;
+        showQuestions(questionCount);
+        questionCounter(questionNumb);
+        nextBtn.classList.remove('active');
+    } else {
+        showResultBox();
+    }
+};
+
+// === Funktionen ===
+
+// Frage und Antwortmöglichkeiten anzeigen
+function showQuestions(index) {
+    const questionText = document.querySelector('.question-text');
+    questionText.textContent = `${questions[index].numb}. ${questions[index].question}`;
+
+    let optionTag = `
+        <div class="option"><span>${questions[index].options[0]}</span></div>
+        <div class="option"><span>${questions[index].options[1]}</span></div>
+        <div class="option"><span>${questions[index].options[2]}</span></div>
+        <div class="option"><span>${questions[index].options[3]}</span></div>
+    `;
+
+    optionList.innerHTML = optionTag;
+
+    const option = document.querySelectorAll('.option');
+    option.forEach(opt => {
+        opt.setAttribute('onclick', 'optionSelected(this)');
+    });
+}
+
+// Auswahl auswerten
+function optionSelected(answer) {
+    let userAnswer = answer.textContent;
+    let correctAnswer = questions[questionCount].answer;
+    let allOptions = optionList.children.length;
+
+    if (userAnswer == correctAnswer) {
+        answer.classList.add('correct');
+        userScore += 1;
+        headerScore();
+    } else {
+        answer.classList.add('incorrect');
+        for (let i = 0; i < allOptions; i++) {
+            if (optionList.children[i].textContent == correctAnswer) {
+                optionList.children[i].setAttribute('class', 'option correct');
+            }
+        }
+    }
+
+    // Alle Optionen deaktivieren
+    for (let i = 0; i < allOptions; i++) {
+        optionList.children[i].classList.add('disabled');
+    }
+
+    nextBtn.classList.add('active');
+}
+
+// Fortschritt anzeigen
+function questionCounter(index) {
+    const questionTotal = document.querySelector('.question-total');
+    questionTotal.textContent = `${index} von ${questions.length} Fragen`;
+}
+
+// Punktestand anzeigen
+function headerScore() {
+    const headerScoreText = document.querySelector('.header-score');
+    headerScoreText.textContent = `Punkte: ${userScore} / ${questions.length}`;
+}
+
+// Ergebnisanzeige
+function showResultBox() {
+    quizBox.classList.remove('active');
+    resultBox.classList.add('active');
+
+    const scoreText = document.querySelector('.score-text');
+    scoreText.textContent = `Dein Ergebnis: ${userScore} von ${questions.length}`;
+
+    const circularProgress = document.querySelector('.circular-progress');
+    const progressValue = document.querySelector('.progress-value');
+    let progressStartValue = -1;
+    let progressEndValue = (userScore / questions.length) * 100;
+    let speed = 20;
+
+    let progress = setInterval(() => {
+        progressStartValue++;
+        progressValue.textContent = `${progressStartValue}%`;
+        circularProgress.style.background = `conic-gradient(#ff3838 ${progressStartValue * 3.6}deg, rgba(255, 255, 255, .1) 0deg)`;
+
+        if (progressStartValue == progressEndValue) {
+            clearInterval(progress);
+        }
+    }, speed);
+}
+
+const startBtns = document.querySelectorAll('.start-btn');
+
+startBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const category = btn.dataset.category || 'default';
+
+        if (category === 'allgemeinwissen') {
+            questions = [...window.allgemeinwissenQuestions];
+        } else if (category === 'geografie') {
+            questions = [...window.geografieQuestions];
+        } else if (category === 'geschichte') {
+            questions = [...window.geschichteQuestions];
+        }
+
+        popupInfo.classList.add('active');
+        main.classList.add('active');
+        document.body.style.overflow = "hidden";
+    });
+});
+
+//1
+document.querySelector('.navbar a:nth-child(3)').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+});
+//2
+document.querySelectorAll('.logo, #home-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
+//3
+document.getElementById("select-start").addEventListener("click", scrollToQuiz);
+document.getElementById("select-quiz").addEventListener("click", scrollToQuiz);
+
+function scrollToQuiz(e) {
+  e.preventDefault();
+  document.getElementById("allgemeinwissen").scrollIntoView({ behavior: "smooth" });
+}
+
+
+const popUp = document.querySelector('.popup-info');
+const popupTitle = document.querySelector('.popup-title');
+const popupText = document.querySelector('.popup-text');
+
+const categoryContent = {
+    allgemeinwissen: {
+        title: "Quiz Allgemeinwissen",
+        text: "Teste dein Wissen in unserem spannenden Allgemeinwissen-Quiz! Beantworte Fragen aus verschiedenen Kategorien wie Geschichte, Geografie, Wissenschaft und Kultur"
+    },
+    geografie: {
+        title: "Quiz Geografie",
+        text: "Wie gut kennst du dich auf der Weltkarte aus? Finde es heraus in unserem Geografie-Quiz – mit Fragen zu Ländern, Hauptstädten, Flüssen und mehr!"
+    },
+    geschichte: {
+        title: "Quiz Geschichte",
+        text: "Teste dein Wissen in unserem spannenden Geschichts-Quiz! Beweise, wie gut du dich mit wichtigen Ereignissen, Epochen und Persönlichkeiten auskennst."
+    }
+};
+
+document.querySelectorAll('.start-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        if (categoryContent[category]) {
+            popupTitle.textContent = categoryContent[category].title;
+            popupText.textContent = categoryContent[category].text;
+            popUp.style.display = 'block';
+        }
+    });
+});
+
+document.querySelector('.exit-btn').addEventListener('click', () => {
+    popUp.style.display = 'none';
+});
+
+document.querySelector('.quiz-section').classList.add('visible');
+
+    </script>
+
+</body>
+
+</html>
